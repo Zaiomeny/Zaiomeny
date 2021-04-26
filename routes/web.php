@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\AgentController;
+
 use App\Http\Controllers\ActiviteController;
+use App\Http\Controllers\AgentController;
 use App\Http\Controllers\BrController;
+use App\Http\Controllers\DetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,5 +24,11 @@ Route::get('/', function () {
 Route::resource('agents',AgentController::class);
 Route::resource('activites',ActiviteController::class);
 Route::resource('brs',BrController::class);
-Route::get('activites/details/{br}',[BrController::class,'details'])->name('activites.details');
-Route::get('activites/etat/{br}',[BrController::class,'etat'])->name('activites.etat');
+Route::resource('details',DetailController::class);
+Route::get('activite/details/{id}',[BrController::class,'details'])->name('activites.details');
+Route::get('activite/etat/{id}',[BrController::class,'etat'])->name('activites.etat');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';

@@ -5,6 +5,10 @@
     $i = 1;
     $j = 1;
 ?>
+<script>
+    var somme;
+</script>
+
 <div class="row ">
             <div class="col-md-12 ">
                     <div class="w-100 d-flex justify-content-between">
@@ -99,7 +103,7 @@
                         <tr>
                                 <td style="height:0px;"></td>
                                 <td style="height:0px;"></td>
-                                <td rowspan="<?= $i; ?>"></td>
+                                <td rowspan="<?= $i; ?>"> <input type="text" name="somme" id="somme" class="form-control" disabled value="  "> </td>
                                 <td rowspan="<?= $i; ?>"  class="align-middle text-center">***</td>
                                 <td></td>
                                 <td rowspan="<?= $i; ?>"></td>
@@ -126,18 +130,72 @@
                 </div>
             </div>
             <div class="row mt-4">
-                <form action="" class="w-75">
+                <form action="{{ route('details.store') }}" method="POST" class="w-75">
+                @csrf 
                     <div class="row">
-                    <div class="col">
-                        <label for="">Détail</label>
-                        <input type="text" name="" id="" class="form-control">
-                    </div>
-                    <div class="col">
-                        <label for="">Montant</label>
-                        <input type="text" name="" id="" class="form-control">
-                    </div>
+                        <div class="col-md-8 col-lg-6 col-xl-6">
+                            <label for="">Nom du BR associé</label>
+                            <select name="activite_id" class="form-select">
+                            @foreach($brS as $br)
+                                @foreach($activiteS as $activite)
+                                    @if($activite->id == $br->activite_id)
+                                        <option value="{{ $activite->id }}">{{ $activite->nom }}</option>
+                                    @endif
+                                @endforeach
+                            @endforeach
+                            </select>
+                        </div>
+                        @foreach($agentS as $agent)
+                            <input type="hidden" name="agent_id" value="{{ $agent->id }}">
+                        @endforeach
+                        <div class="col-md-8 col-lg-6 col-xl-6">
+                            <label for="">Libélé d' activité</label>
+                            <input type="text" name="libele_d_activite" id="" class="form-control" required>
+                        </div>
+                        <div class="col-md-8 col-lg-6 col-xl-6">
+                            <label for="">Montant</label>
+                            <input type="text" name="prix" id="" class="form-control" required>
+                        </div>
+                        <div class="co-md-8 col-lg-6 col-xl-6l">
+                            <button type="submit" class="btn btn-outline-danger mt-4">Ajouter</button>
+                        </div>
                     </div>
                 </form>
+                @if(session()->has('Detail'))
+                   <?php $details = session('Detail');
+                       // dd($details);
+                   $somme = 0;
+                   ?>
+                @endif
+                @if(isset($details))   
+                   @foreach($brS as $br)
+                        @foreach($activiteS as $activite)
+                            @if($activite->id == $br->activite_id)
+                            
+                                <h5>{{ $activite->num_br }} : {{ $activite->nom }}</h5>
+                                @foreach ($details as $detail)
+                                <ul>
+                                    @if($detail->activite_id == $activite->id)
+                                    <?php $somme = $somme + $detail->prix ;
+                                        
+                                    ?>
+                                    <script>  
+                                    somme = <?php echo $somme; ?>;
+                                    
+                                    </script>
+                                        <li>{{ $detail->libele_d_activite }}   {{ $detail->prix }}</li>
+                                    @endif
+                                </ul>
+                                @endforeach
+                                <script>
+                                    alert(somme);
+                                </script>
+                            
+                            @endif
+                        @endforeach
+                    @endforeach
+                @endif
+                
                 
             </div>
 
