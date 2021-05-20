@@ -1,5 +1,5 @@
-@extends('activites.layout')
-@section('content')
+<x-app-layout>
+    
 <?php
     $auj =now();
     $i = 1;
@@ -199,4 +199,5 @@
                 
             </div>
 
-@endsection
+
+</x-app-layout>

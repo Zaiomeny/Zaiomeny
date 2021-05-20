@@ -1,3 +1,27 @@
+
+
+.bg-gray{
+  background-color: gray;
+}
+
+.bg-personnel-ws{
+  background-color: rgba(245, 245, 245, 0.808);
+  border:2px solid rgba(0, 0, 0, 0.219);
+ }
+.bg-ws{
+  background-color: rgba(245, 245, 245, 0.808);
+}
+.bg-gray{
+  background-color: rgb(58, 58, 58);
+  color:white;
+}
+.borderless{
+  border:none;
+}
+.bg-none{
+  background-color: transparent !important;
+}
+
 /**
 
 Template Name: GURU Able Admin Template
@@ -42,11 +66,13 @@ ul {
   outline: none; }
 
 a {
+  text-decoration: none;
   font-size: 14px;
-  color: #303548; }
-  a:focus, a:hover {
-    text-decoration: none;
-    color: #4680ff; }
+  color: #303548;
+}
+a:focus, a:hover {
+  text-decoration: none;
+  color: #4680ff; }
 
 h6 {
   font-size: 14px; }
@@ -6587,7 +6613,7 @@ body .pcoded[vertical-nav-type="compact"] .main-menu {
   width: 200px; }
   body .pcoded[vertical-nav-type="compact"] .main-menu .pcoded-badge {
     display: none; }
-body.menu-bottom .navbar-wrapper {
+body .menu-bottom .navbar-wrapper {
   .z-index: 1050; }
 body.menu-bottom .pcoded .pcoded-main-container {
   margin-top: 0 !important; }

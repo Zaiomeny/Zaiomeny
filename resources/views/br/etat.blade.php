@@ -1,5 +1,5 @@
-@extends('activites.layout')
-@section('content')
+<x-app-layout>
+    
 <div class="w-100 border border-dark text-center mt-5">
     <strong>Liste des PJs vérifiées</strong>
 </div>
@@ -36,4 +36,5 @@
         </tbody>
     </table>
 </div>
-@endsection
+
+</x-app-layout>

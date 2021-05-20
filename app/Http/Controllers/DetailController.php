@@ -37,15 +37,33 @@ class DetailController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'activite_id' => 'required',
-            'agent_id' => 'required',
+            'activite_id'       => 'required',
+            'agent_id'          => 'required',
             'libele_d_activite' => 'required',
-            'prix' => 'required',
+            'prix'              => 'required',
+            
         ]);
-        Detail::create($request->all());
-        $detailS = Detail::latest()->get();
-    
-        return back()->with('Detail',$detailS);
+        
+            $activite_id        = $request->activite_id;
+            $agent_id           = $request->agent_id;
+            $libele_d_activite  = $request->libele_d_activite;
+            $prix               = $request->prix;
+            
+        for($i = 0; $i < count($libele_d_activite) ;$i++){
+            $datasave = [
+                'activite_id'       => $activite_id,
+                'agent_id'          => $agent_id,
+                'libele_d_activite' => $libele_d_activite[$i],
+                'prix'              => $prix[$i],
+                
+
+           ];
+            
+            Detail::create($datasave);
+            
+        }
+        
+        return back();
     }
 
     /**
@@ -80,10 +98,10 @@ class DetailController extends Controller
     public function update(Request $request, Detail $detail)
     {
         $request->validate([
-            'activite_id' => 'required',
-            'agent_id' => 'required',
+            'activite_id'       => 'required',
+            'agent_id'          => 'required',
             'libele_d_activite' => 'required',
-            'prix' => 'required',
+            'prix'              => 'required',
         ]);
         $detail->update($request->all());
     }
@@ -97,5 +115,13 @@ class DetailController extends Controller
     public function destroy(Detail $detail)
     {
         $detail->delete();
+        return back();
+    }
+
+    public function supprimer($detail)
+    {
+        Detail::where('id',$detail)->delete();
+        return back();
+
     }
 }

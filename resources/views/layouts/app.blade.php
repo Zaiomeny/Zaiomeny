@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -31,11 +32,34 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     </heaz>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased fix-menu">
+
+ 
+    <!--monscript-->
+
+
+
+    <!-- Pre-loader start -->
+    <div class="theme-loader">
+    <div class="ball-scale">
+        <div class='contain'>
+            <div class="ring"><div class="frame"></div></div>
+            <div class="ring"><div class="frame"></div></div>
+            <div class="ring"><div class="frame"></div></div>
+            <div class="ring"><div class="frame"></div></div>
+            <div class="ring"><div class="frame"></div></div>
+            <div class="ring"><div class="frame"></div></div>
+            <div class="ring"><div class="frame"></div></div>
+            <div class="ring"><div class="frame"></div></div>
+            <div class="ring"><div class="frame"></div></div>
+            <div class="ring"><div class="frame"></div></div>
+        </div>
+    </div>
+</div>
+    <!-- Pre-loader end -->
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
 
-           
         </div>
 
 
@@ -57,5 +81,6 @@
             <script src="{{ asset('assets/js/pcoded.min.js')}}"></script>
             <script src="{{ asset('assets/js/demo-12.js')}}"></script>
             <script src="{{ asset('assets/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+        <!--End of js-->
     </body>
 </html>

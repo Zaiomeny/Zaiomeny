@@ -44,14 +44,7 @@ class BrController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            
-            'activite_id' => 'required',
-            'agent_id' => 'required',
-            'fonction' => 'required',
-            'montant' => 'required',
-            'num_equipe' => 'required',
-            'date_de_virement' => 'required',
-            'etat' => 'required',
+        
 
         ]);
         Brs::create($request->all());
@@ -99,13 +92,8 @@ class BrController extends Controller
     public function update(Request $request, Brs $brs)
     {
         $request->validate([
-            'activite_id' => 'required',
-            'agent_id' => 'required',
-            'fonction' => 'required',
-            'montant' => 'required',
-            'num_equipe' => 'required',
-            'date_de_virement' => 'required',
-            'etat' => 'required',
+
+            
 
         ]);
         $brs->update($request->all());
@@ -130,11 +118,9 @@ class BrController extends Controller
         $activiteS = DB::table('activites')
                         ->where('id',$activite_id)
                         ->get();
-        $brS = DB::table('brs')
-                    ->where('activite_id', $activite_id)
-                    ->get();
+        
         $agentS = Agents::latest()->get();
-        return view('activites.details', compact('activiteS','brS','agentS'));
+        return view('activites.details', compact('activiteS','agentS'));
     }
     public function etat($activite_id)
     {

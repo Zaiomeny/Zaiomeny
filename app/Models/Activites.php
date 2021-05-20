@@ -9,8 +9,25 @@ class Activites extends Model
 {
     use HasFactory;
     protected $fillable=[
-
+        
         'nom',
-        'num_br',
+        'projet_id',
+        'agent_id',
+        'montant',
+        'date_de_virement',
+        
+        
     ];
+    public function details()
+    {
+        return $this->hasMany(Detail::class);
+    }
+    public function projet()
+    {
+        return $this->belongsTo(Projet::class);
+    }
+    public function agent()
+    {
+        return $this->belongsTo(Agents::class);
+    }
 }

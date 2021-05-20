@@ -1,5 +1,5 @@
-@extends('activites.layout')
-@section('content')
+<x-app-layout>
+    
 <div class="row ">
             <div class="col-md-12 ">
                     <div class="w-100 d-flex justify-content-between">
@@ -127,4 +127,5 @@
                 </form>
             </div>
 
-@endsection
+
+</x-app-layout>

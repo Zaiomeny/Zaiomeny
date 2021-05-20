@@ -14,18 +14,21 @@ class CreateDetailsTable extends Migration
     public function up()
     {
         Schema::create('details', function (Blueprint $table) {
-            $table->id();
-            $table->integer('activite_id');
+            $table->bigIncrements('id');
             $table->integer('agent_id');
+            $table->integer('activite_id');
             $table->string('libele_d_activite');
             $table->string('prix');
 
+           
             $table->foreign('agent_id')
                     ->references('id')
-                    ->on('agents');
+                    ->on('agents')
+                    ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('activite_id')
                     ->references('id')
-                    ->on('activites');
+                    ->on('activites')
+                    ->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
         });

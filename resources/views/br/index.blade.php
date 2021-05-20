@@ -1,6 +1,7 @@
-@extends('activites.layout')
-@section('content')
-    <div class="row">
+<x-app-layout>
+
+
+<div class="row">
         <div class="col-md-12 mx-auto mt-2 p-4  bordered">
         <div class="float-start d-flex justify-content-center">
             <span> <a href="{{ route('agents.create') }}" class="btn btn-outline-success">Nouvel agent</a></span>
@@ -20,7 +21,7 @@
                 <tbody>
                 @foreach($activiteS as $activite) 
                     <tr>
-                        <td>{{ $activite->num_br }}</td>
+                        <td></td>
                         <td>{{ $activite->nom }}</td>
                         <td> <a href="{{ route('activites.details',$activite->id) }}" class="btn btn-outline-success m-0">Détails</a> </td>
                         <td> <a href="{{ route('activites.etat',$activite->id) }}" class="btn btn-outline-primary m-0">Etat</a> </td>
@@ -33,4 +34,5 @@
             
         </div>
     </div>
-@endsection
+
+</x-app-layout>

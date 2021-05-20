@@ -1,7 +1,7 @@
-@extends('activites.layout')
-@section('content')
-    <div class="row">
-        <div class="col-md-8 mx-auto mt-2 p-4 shadow-lg bordered">
+<x-app-layout>
+    
+<div class="row">
+        <div class="col-md-8 mt-2 p-4 shadow-sm bordered">
         <h5 class="text-center text-info">Nouveau virement</h5>
         <hr>
         <form action="{{ route('brs.store') }}" method="post">
@@ -47,4 +47,5 @@
         </form>
         </div>
     </div>
-@endsection
+
+</x-app-layout>

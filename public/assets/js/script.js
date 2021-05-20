@@ -137,3 +137,137 @@ var nav = $('.fixed-button');
          nav.removeClass('active');
      }
  });
+
+
+ 
+
+
+
+
+$(document).ready(function(){
+    $('i#ajout_ligne_details').on('click',function(){
+        var ligne ='<tr>'+
+        '<td class="p-1">'+ 
+            '<input class="form-control" type="text" name="libele_d_activite[]" >'+
+        '</td>'+
+        '<td class="p-1">'+
+            '<input class="form-control" type="text" name="prix[]">'+ 
+        '</td>'+
+        '<td class="text-center">'+ 
+            '<i onclick="$(this).parent().parent().remove();" class="icofont icofont-ui-close btn btn-sm btn-square btn-outline-info"></i>'+ 
+        '</td>'+
+    '</tr>';
+    $('tbody#parent_details').append(ligne);
+    });
+    
+    
+});
+/**
+ * Mon script
+ */
+
+
+
+$(document).ready(function(){
+    $('i#addRow').on('click',function(){
+        addRow();
+    });
+function addRow()
+        {
+var div ='<div class="form-row mt-2  bg-personnel-ws w-100" id="formulaire" >'+
+            '<div class="w-100 p-0">'+
+                '<i onclick="$(this).parent().parent().remove();" class="icofont icofont-ui-close btn btn-sm btn-square btn-outline-danger  float-end btn-x-ws mb-1"></i>'+
+            '</div>'+                                    
+            '<!--Noms-->'+
+                '<div class="col-lg-4 col-xs-4 col-md-6 col-sm-12">'+
+                    '<div class="input-group">'+                      
+                        '<input type="text" name="nom[]"  class="form-control form-txt-primary form-control-bold" placeholder="Noms" required>'+
+                    '</div>'+
+                '</div>'+
+            '<!--Prénoms-->'+
+                '<div class="col-lg-4 col-xs-4 col-md-6 col-sm-12">'+
+                    '<div class="input-group">'+                       
+                        '<input type="text" name="prenom[]"  class="form-control form-txt-primary form-control-bold" placeholder="Prénoms">'+
+                    '</div>'+
+                '</div>'+
+            '<!--Fonction-->'+
+                '<div class="col-lg-4 col-xs-4 col-md-6 col-sm-12">'+
+                    '<div class="input-group">'+                        
+                        '<input type="text" name="fonction[]"  class="form-control form-txt-primary form-control-bold" placeholder="Fonction" required>'+
+                    '</div>'+
+                '</div>'+
+            '<!--Numéro Equipe-->'+
+                '<div class="col-lg-4 col-xs-4 col-md-6 col-sm-12">'+
+                    '<div class="input-group">'+                       
+                        '<input type="text" name="num_equipe[]"  class="form-control form-txt-primary form-control-bold" placeholder="Equipe n° " required>'+
+                    '</div>'+
+                '</div>'+
+            '<!--Adresse-->'+
+                '<div class="col-lg-4 col-xs-4 col-md-6 col-sm-12">'+
+                    '<div class="input-group">'+                       
+                        '<input type="text" name="adresse[]"  class="form-control form-txt-primaryform-control-bold" placeholder="Adresse" required>'+
+                    '</div>'+
+                '</div>'+
+            '<!--Téléphone-->'+
+                '<div class="col-lg-4 col-xs-4 col-md-6 col-sm-12">'+
+                    '<div class="input-group">'+
+
+                        '<input type="text" name="telephone[]"  class="form-control form-txt-primary form-control-bold" placeholder="Téléphone" required>'+
+                    '</div>'+
+                '</div>'+
+                
+        '</div>';
+
+
+            $(".para").append(div);
+        };
+
+        $("i#remove").on('click',function(){
+            
+            $(this).parent().parent().remove();
+            
+                    
+        });
+
+        $('.valider').on('click',function(){
+            if($('#formulaire').length == 0){
+                alert('Veuillez ajouter un formulaire !');
+                
+
+            }
+        });
+});
+
+$(document).ready(function() {
+    $('tr#close').hide();
+    $('th#action,td#action').hide();
+    $('#plus').on('click',function(){
+        $('th#action,td#action').toggle(200);
+    });
+ });
+$(document).ready(function(){
+    $('i#ajouterligne').on('click',function(){
+        var input ='<tr>'+
+                        '<td class="p-1">'+
+                            '<!--nom de l activité-->'+
+                            '<input type="text" name="nom[]" class="form-control" required>'+
+                        '</td>'+
+                        '<td class="p-1">'+
+                            '<!--Montant-->'+
+                            '<input type="text" name="montant[]" class="form-control" required>'+
+                        '</td>'+
+                        '<td class="p-1">'+
+                            '<!--Date de virement-->'+
+                            '<input type="date" name="date_de_virement[]" class="form-control" required>'+
+                        '</td>'+
+                        '<td class="text-center">'+
+                            '<i class="icofont icofont-ui-close btn btn-sm btn-square btn-outline-info" onclick="$(this).parent().parent().remove();"></i>'+
+                        '</td>'+
+                    '</tr>';
+        $('tbody#tbody').append(input);
+    });
+    $('i#supprimerligne').on('click',function(){
+        $(this).parent().parent().remove();
+    });
+
+});

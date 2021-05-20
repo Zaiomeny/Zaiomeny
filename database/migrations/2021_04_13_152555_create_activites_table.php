@@ -14,9 +14,22 @@ class CreateActivitesTable extends Migration
     public function up()
     {
         Schema::create('activites', function (Blueprint $table) {
-            $table->id();
-            $table->string('nom');
-            $table->string('num_br');
+            $table->bigIncrements('id');
+            $table->string('nom');  
+            $table->integer('projet_id');
+            $table->integer('agent_id');
+            $table->string('montant');
+            $table->date('date_de_virement');
+
+
+            $table->foreign('projet_id')
+                    ->references('id')
+                    ->on('projets')
+                    ->onUpdate('cascade')->onDelete('cascade');  
+            $table->foreign('agent_id')
+                    ->references('id')
+                    ->on('agents')
+                    ->onUpdate('cascade')->onDelete('cascade');  
             $table->timestamps();
         });
     }

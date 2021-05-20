@@ -9,10 +9,17 @@ class Detail extends Model
 {
     use HasFactory;
     protected $fillable = [
-
-        'activite_id',
         'agent_id',
+        'activite_id',
         'libele_d_activite',
         'prix',
     ];
+    public function activite()
+    {
+        return $this->belongsTo(Activite::class);
+    }
+    public function agent()
+    {
+        return $this->belongsTo(Agent::class);
+    }
 }

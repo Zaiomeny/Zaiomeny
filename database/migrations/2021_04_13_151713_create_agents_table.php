@@ -14,11 +14,20 @@ class CreateAgentsTable extends Migration
     public function up()
     {
         Schema::create('agents', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('nom');
             $table->string('prenom')->nullable();
+            $table->string('fonction');
+            $table->string('num_equipe');
             $table->string('adresse');
             $table->string('telephone');
+            $table->integer('projet_id')->nullable();
+
+            $table->foreign('projet_id')
+                    ->references('id')
+                    ->on('projets')
+                    ->onUpdate('cascade')->onDelete('cascade');
+                    
             $table->timestamps();
         });
     }

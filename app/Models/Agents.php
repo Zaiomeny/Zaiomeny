@@ -11,7 +11,25 @@ class Agents extends Model
     protected $fillable = [
         'nom',
         'prenom',
+        'fonction',
+        'num_equipe',
         'adresse',
         'telephone',
+        'projet_id',
     ];
+    
+    public function projet()
+    {
+        return $this->belongsTo(Projet::class);
+    }
+
+    public function activites()
+    {
+        return $this->hasMany(Activites::class);
+    }
+
+    public function details()
+    {
+        return $this->hasMany(Detail::class);
+    }
 }

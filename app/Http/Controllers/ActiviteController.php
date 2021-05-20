@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Projet;
 use App\Models\Activites;
+use App\Models\Agents;
 use App\Models\Brs;
 use Illuminate\Http\Request;
 
@@ -40,11 +42,32 @@ class ActiviteController extends Controller
     {
         $request->validate([
             'nom' => 'required',
-            'num_br' => 'required',
+            'projet_id' => 'required',
+            'agent_id' => 'required',
+            'montant' => 'required',
+            'date_de_virement' => 'required',
+            
+            
         ]);
-        Activites::create($request->all());
-        $activiteS = Activites::latest()->get();
-        return view('activites.index', compact('activiteS'));
+
+        $nom = $request->nom;
+        $projet_id = $request->projet_id;
+        $agent_id = $request->agent_id;
+        $montant = $request->montant;
+        $date_de_virement = $request->date_de_virement;
+
+        for($i = 0; $i < count($nom); $i++){
+            $datesave = [
+                'nom' => $nom[$i],
+                'projet_id' => $projet_id,
+                'agent_id' => $agent_id,
+                'montant' => $montant[$i],
+                'date_de_virement' => $date_de_virement[$i],
+            ];
+            Activites::create($datesave);
+        }
+        
+        return back();
     }
 
     /**
@@ -79,8 +102,12 @@ class ActiviteController extends Controller
     public function update(Request $request, Activites $activites)
     {
         $request->validate([
+            
             'nom' => 'required',
-            'num_br' => 'required',
+            'projet_id' => 'required',
+            'agent_id' => 'required',
+            'montant' => 'required',
+            'date_de_virement' => 'required',
         ]);
         $activites->update($request->all());
         $activiteS = Activites::latest()->get();
@@ -96,7 +123,16 @@ class ActiviteController extends Controller
     public function destroy($activite)
     {
         Activites::where('id',$activite)->delete();
-        $activiteS = Activites::latest()->get();
-        return view('activites.index', compact('activiteS'));
+        return back();
+    }
+
+    public function liste($projet_id,$agent_id)
+    {
+        $projetS = Projet::where('id',$projet_id)->get();
+        $activiteS = Activites::where('agent_id',$agent_id)->get();
+        $agentS = Agents::where('id',$agent_id)->get();
+
+        return view('activites.liste',compact('projetS','agentS','activiteS'));
+
     }
 }
