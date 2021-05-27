@@ -25,7 +25,7 @@ class DetailController extends Controller
      */
     public function create()
     {
-        return back();
+        //
     }
 
     /**
@@ -37,24 +37,24 @@ class DetailController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'activite_id'       => 'required',
-            'agent_id'          => 'required',
+            'activites_id'      => 'required',
+            'agents_id'         => 'required',
             'libele_d_activite' => 'required',
             'prix'              => 'required',
             
         ]);
         
-            $activite_id        = $request->activite_id;
-            $agent_id           = $request->agent_id;
+            $activites_id       = $request->activites_id;
+            $agents_id          = $request->agents_id;
             $libele_d_activite  = $request->libele_d_activite;
             $prix               = $request->prix;
             
         for($i = 0; $i < count($libele_d_activite) ;$i++){
             $datasave = [
-                'activite_id'       => $activite_id,
-                'agent_id'          => $agent_id,
+                'activites_id'      => $activites_id,
+                'agents_id'         => $agents_id,
                 'libele_d_activite' => $libele_d_activite[$i],
-                'prix'              => $prix[$i],
+                'prix'              => str_replace([' ','.',','], ['','',''], $prix[$i]),
                 
 
            ];
@@ -98,11 +98,12 @@ class DetailController extends Controller
     public function update(Request $request, Detail $detail)
     {
         $request->validate([
-            'activite_id'       => 'required',
-            'agent_id'          => 'required',
+            'activites_id'      => 'required',
+            'agents_id'         => 'required',
             'libele_d_activite' => 'required',
             'prix'              => 'required',
         ]);
+
         $detail->update($request->all());
     }
 
@@ -118,9 +119,9 @@ class DetailController extends Controller
         return back();
     }
 
-    public function supprimer($detail)
+    public function supprimer($details_id)
     {
-        Detail::where('id',$detail)->delete();
+        Detail::where('id',$details_id)->delete();
         return back();
 
     }

@@ -10,13 +10,19 @@
 
         <!-- Favicon icon -->
         <link rel="icon" href="{{ asset('assets/images/favicon.ico')}}" type="image/x-icon">
-        <!-- Google font--><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
+
+        <!-- Google font-->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
+
         <!-- Required Fremwork -->
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap/css/bootstrap.min.css')}}">
+
         <!-- themify-icons line icon -->
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/icon/themify-icons/themify-icons.css')}}">
+
         <!-- ico font -->
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/icon/icofont/css/icofont.css')}}">
+        
         <!-- Style.css -->
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/jquery.mCustomScrollbar.css')}}">
@@ -31,7 +37,36 @@
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    </heaz>
+
+        <!-- Required Jquery -->
+            <script type="text/javascript" src="{{ asset('assets/js/jquery/jquery.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('assets/js/jquery-ui/jquery-ui.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('assets/js/popper.js/popper.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('assets/js/bootstrap/js/bootstrap.min.js')}}"></script>
+
+        <!-- jquery slimscroll js -->
+            <script type="text/javascript" src="{{ asset('assets/js/jquery-slimscroll/jquery.slimscroll.js')}}"></script>
+
+        <!-- modernizr js -->
+            <script type="text/javascript" src="{{ asset('assets/js/modernizr/modernizr.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('assets/js/modernizr/css-scrollbars.js')}}"></script>
+
+        <!-- classie js -->
+            <script type="text/javascript" src="{{ asset('assets/js/classie/classie.js')}}"></script>
+
+        <!-- Custom js -->
+            <script type="text/javascript" src="{{ asset('assets/js/script.js')}}"></script>
+            <script src="{{ asset('assets/js/pcoded.min.js')}}"></script>
+            <script src="{{ asset('assets/js/demo-12.js')}}"></script>
+            <script src="{{ asset('assets/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+
+        <!--End of js-->
+            
+        <!-- Morris Chart js -->
+            <script src="{{ asset('assets/js/raphael/raphael.min.js') }}"></script>
+            <script src="{{ asset('assets/js/morris.js/morris.js') }}"></script>
+
+    </head>
     <body class="font-sans antialiased fix-menu">
 
  
@@ -62,25 +97,5 @@
 
         </div>
 
-
-
-        <!-- Required Jquery -->
-            <script type="text/javascript" src="{{ asset('assets/js/jquery/jquery.min.js')}}"></script>
-            <script type="text/javascript" src="{{ asset('assets/js/jquery-ui/jquery-ui.min.js')}}"></script>
-            <script type="text/javascript" src="{{ asset('assets/js/popper.js/popper.min.js')}}"></script>
-            <script type="text/javascript" src="{{ asset('assets/js/bootstrap/js/bootstrap.min.js')}}"></script>
-        <!-- jquery slimscroll js -->
-            <script type="text/javascript" src="{{ asset('assets/js/jquery-slimscroll/jquery.slimscroll.js')}}"></script>
-        <!-- modernizr js -->
-            <script type="text/javascript" src="{{ asset('assets/js/modernizr/modernizr.js')}}"></script>
-            <script type="text/javascript" src="{{ asset('assets/js/modernizr/css-scrollbars.js')}}"></script>
-        <!-- classie js -->
-            <script type="text/javascript" src="{{ asset('assets/js/classie/classie.js')}}"></script>
-        <!-- Custom js -->
-            <script type="text/javascript" src="{{ asset('assets/js/script.js')}}"></script>
-            <script src="{{ asset('assets/js/pcoded.min.js')}}"></script>
-            <script src="{{ asset('assets/js/demo-12.js')}}"></script>
-            <script src="{{ asset('assets/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
-        <!--End of js-->
     </body>
 </html>

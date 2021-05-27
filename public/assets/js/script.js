@@ -148,10 +148,10 @@ $(document).ready(function(){
     $('i#ajout_ligne_details').on('click',function(){
         var ligne ='<tr>'+
         '<td class="p-1">'+ 
-            '<input class="form-control" type="text" name="libele_d_activite[]" >'+
+            '<input class="form-control" type="text" name="libele_d_activite[]" required>'+
         '</td>'+
         '<td class="p-1">'+
-            '<input class="form-control" type="text" name="prix[]">'+ 
+            '<input class="form-control" type="text" name="prix[]" required>'+ 
         '</td>'+
         '<td class="text-center">'+ 
             '<i onclick="$(this).parent().parent().remove();" class="icofont icofont-ui-close btn btn-sm btn-square btn-outline-info"></i>'+ 
@@ -165,7 +165,11 @@ $(document).ready(function(){
 /**
  * Mon script
  */
-
+ $(document).ready(function(){
+    $('i#sSelectionneTout').on('click',function(){
+         alert('Biiing');
+     });
+ });
 
 
 $(document).ready(function(){
@@ -174,52 +178,54 @@ $(document).ready(function(){
     });
 function addRow()
         {
-var div ='<div class="form-row mt-2  bg-personnel-ws w-100" id="formulaire" >'+
+var div ='<div class="form-row mt-2  bg-personnel-ws w-100 mx-auto" id="formulaire" >'+
             '<div class="w-100 p-0">'+
                 '<i onclick="$(this).parent().parent().remove();" class="icofont icofont-ui-close btn btn-sm btn-square btn-outline-danger  float-end btn-x-ws mb-1"></i>'+
             '</div>'+                                    
-            '<!--Noms-->'+
-                '<div class="col-lg-4 col-xs-4 col-md-6 col-sm-12">'+
+
+                '<!--Bloc gauche-->'+
+                '<div class="col-lg-8 col-xs-4 col-md-6 col-sm-10 mx-auto">'+
+
+                    '<!--Noms-->'+
                     '<div class="input-group">'+                      
-                        '<input type="text" name="nom[]"  class="form-control form-txt-primary form-control-bold" placeholder="Noms" required>'+
+                        '<input type="text" name="nom[]"  class="form-control form-txt-primary " placeholder="Noms" required>'+
                     '</div>'+
-                '</div>'+
-            '<!--Prénoms-->'+
-                '<div class="col-lg-4 col-xs-4 col-md-6 col-sm-12">'+
+                
+                    '<!--Prénoms-->'+
                     '<div class="input-group">'+                       
-                        '<input type="text" name="prenom[]"  class="form-control form-txt-primary form-control-bold" placeholder="Prénoms">'+
+                        '<input type="text" name="prenom[]"  class="form-control form-txt-primary " placeholder="Prénoms">'+
                     '</div>'+
-                '</div>'+
-            '<!--Fonction-->'+
-                '<div class="col-lg-4 col-xs-4 col-md-6 col-sm-12">'+
+                
+                    '<!--Fonction-->'+
                     '<div class="input-group">'+                        
-                        '<input type="text" name="fonction[]"  class="form-control form-txt-primary form-control-bold" placeholder="Fonction" required>'+
+                        '<input type="text" name="fonction[]"  class="form-control form-txt-primary " placeholder="Fonction" required>'+
                     '</div>'+
                 '</div>'+
-            '<!--Numéro Equipe-->'+
-                '<div class="col-lg-4 col-xs-4 col-md-6 col-sm-12">'+
+
+                '<!--Bloc droite-->'+
+                '<div class="col-lg-4 col-xs-4 col-md-6 col-sm-10 mx-auto">'+
+
+                    '<!--Numéro Equipe-->'+
                     '<div class="input-group">'+                       
-                        '<input type="text" name="num_equipe[]"  class="form-control form-txt-primary form-control-bold" placeholder="Equipe n° " required>'+
+                        '<input type="text" name="num_equipe[]"  class="form-control form-txt-primary " placeholder="Equipe" required>'+
                     '</div>'+
-                '</div>'+
-            '<!--Adresse-->'+
-                '<div class="col-lg-4 col-xs-4 col-md-6 col-sm-12">'+
+                
+            '       <!--Adresse-->'+
                     '<div class="input-group">'+                       
-                        '<input type="text" name="adresse[]"  class="form-control form-txt-primaryform-control-bold" placeholder="Adresse" required>'+
+                        '<input type="text" name="adresse[]"  class="form-control form-txt-primary" placeholder="Adresse" required>'+
                     '</div>'+
-                '</div>'+
-            '<!--Téléphone-->'+
-                '<div class="col-lg-4 col-xs-4 col-md-6 col-sm-12">'+
+                
+            '       <!--Téléphone-->'+
                     '<div class="input-group">'+
 
-                        '<input type="text" name="telephone[]"  class="form-control form-txt-primary form-control-bold" placeholder="Téléphone" required>'+
+                        '<input type="text" name="telephone[]"  class="form-control form-txt-primary " placeholder="Téléphone" required>'+
                     '</div>'+
                 '</div>'+
                 
         '</div>';
 
 
-            $(".para").append(div);
+            $("#bloc").append(div);
         };
 
         $("i#remove").on('click',function(){

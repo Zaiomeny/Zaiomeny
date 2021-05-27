@@ -21,9 +21,9 @@ class CreateAgentsTable extends Migration
             $table->string('num_equipe');
             $table->string('adresse');
             $table->string('telephone');
-            $table->integer('projet_id')->nullable();
+            $table->integer('projets_id')->nullable();
 
-            $table->foreign('projet_id')
+            $table->foreign('projets_id')
                     ->references('id')
                     ->on('projets')
                     ->onUpdate('cascade')->onDelete('cascade');

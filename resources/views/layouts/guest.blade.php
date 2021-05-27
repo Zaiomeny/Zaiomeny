@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>INSTAT Madagascar</title>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -17,8 +17,37 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body>
+    
         <div class="font-sans text-gray-900 antialiased">
             {{ $slot }}
         </div>
+
+        
+        <!-- Required Jquery -->
+           <script type="text/javascript" src="{{ asset('assets/js/jquery/jquery.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('assets/js/jquery-ui/jquery-ui.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('assets/js/popper.js/popper.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('assets/js/bootstrap/js/bootstrap.min.js')}}"></script>
+
+        <!-- jquery slimscroll js -->
+            <script type="text/javascript" src="{{ asset('assets/js/jquery-slimscroll/jquery.slimscroll.js')}}"></script>
+
+        <!-- modernizr js -->
+            <script type="text/javascript" src="{{ asset('assets/js/modernizr/modernizr.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('assets/js/modernizr/css-scrollbars.js')}}"></script>
+
+        <!-- classie js -->
+            <script type="text/javascript" src="{{ asset('assets/js/classie/classie.js')}}"></script>
+
+        <!-- Custom js -->
+            <script type="text/javascript" src="{{ asset('assets/js/script.js')}}"></script>
+            <script src="{{ asset('assets/js/pcoded.min.js')}}"></script>
+            <script src="{{ asset('assets/js/demo-12.js')}}"></script>
+            <script src="{{ asset('assets/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+        <!--End of js-->
+            
+        <!-- Morris Chart js -->
+            <script src="{{ asset('assets/js/raphael/raphael.min.js') }}"></script>
+            <script src="{{ asset('assets/js/morris.js/morris.js') }}"></script>
     </body>
 </html>

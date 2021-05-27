@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\verification;
 
 class Agents extends Model
 {
@@ -15,7 +16,7 @@ class Agents extends Model
         'num_equipe',
         'adresse',
         'telephone',
-        'projet_id',
+        'projets_id',
     ];
     
     public function projet()
@@ -31,5 +32,9 @@ class Agents extends Model
     public function details()
     {
         return $this->hasMany(Detail::class);
+    }
+    public function verifications()
+    {
+        return $this->hasMany(verification::class,'agents_id');
     }
 }

@@ -15,17 +15,17 @@ class CreateDetailsTable extends Migration
     {
         Schema::create('details', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('agent_id');
-            $table->integer('activite_id');
+            $table->integer('agents_id');
+            $table->integer('activites_id');
             $table->string('libele_d_activite');
             $table->string('prix');
 
            
-            $table->foreign('agent_id')
+            $table->foreign('agents_id')
                     ->references('id')
                     ->on('agents')
                     ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('activite_id')
+            $table->foreign('activites_id')
                     ->references('id')
                     ->on('activites')
                     ->onUpdate('cascade')->onDelete('cascade');

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\verification;
+use App\Models\Agents;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VerificationController extends Controller
 {
@@ -36,18 +38,20 @@ class VerificationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'projet_id'             => 'required',
-            'agent_id'              => 'required',
-            'activite_nom'           => 'required',
+            'projets_id'            => 'required',
+            'agents_id'             => 'required',
+            'activite_nom'          => 'required',
             'total_a_justifier'     => 'required',
             'total_justifie'        => 'required',
             'date_d_arrivee_de_pjs' => 'required',
             'verificateur'          => 'required',
         ]);
 
-        $projet_id              = $request->projet_id;
-        $agent_id               = $request->agent_id;
-        $activite_nom            = $request->activite_nom;
+        $projets_id             = $request->projets_id;
+        $agents_id              = $request->agents_id;
+        $code_analytique        = $request->code_analytique;
+        $journal_banquaire      = $request->journal_banquaire;
+        $activite_nom           = $request->activite_nom;
         $total_a_justifier      = $request->total_a_justifier;
         $total_justifie         = $request->total_justifie;
         $reste                  = $request->reste;
@@ -57,22 +61,42 @@ class VerificationController extends Controller
         $verificateur           = $request->verificateur;
 
 
-        for($i = 0; $i < count($total_a_justifier) ;$i++)
-        {
-            $datasave = [
-                'projet_id'             => $projet_id,
-                'agent_id'              => $agent_id,
-                'activite_nom'           => $activite_nom[$i],
-                'total_a_justifier'     => $total_a_justifier[$i],
-                'total_justifie'        => $total_justifie[$i],
-                'reste'                 => $reste[$i],
-                'observation'           => $observation[$i],
-                'date_d_arrivee_de_pjs' => $date_d_arrivee_de_pjs,
-                'date_de_verification'  => $date_de_verification,
-                'verificateur'          => $verificateur,
-            ];
-            Verification::create($datasave);
-        }
+
+
+        for($i = 0; $i < count($total_a_justifier) ; $i++)
+            {
+                $datasave = [
+                    'projets_id'            => $projets_id,
+                    'agents_id'             => $agents_id,
+                    'code_analytique'       => $code_analytique,
+                    'journal_banquaire'     => $journal_banquaire,
+                    'activite_nom'          => $activite_nom[$i],
+                    'total_a_justifier'     => $total_a_justifier[$i],
+                    'total_justifie'        => $total_justifie[$i],
+                    'reste'                 => $reste[$i],
+                    'observation'           => $observation[$i],
+                    'date_d_arrivee_de_pjs' => $date_d_arrivee_de_pjs,
+                    'date_de_verification'  => $date_de_verification,
+                    'verificateur'          => $verificateur,
+                ];
+                Verification::create($datasave);
+            }
+
+        $projetS        = DB::table('projets')->where('id',$projets_id)
+                                                ->get();
+        $agentS         = DB::table('agents')->where('id',$agents_id)
+                                                ->where('projets_id',$projets_id)
+                                                ->get();
+        $activiteS      = DB::table('activites')->where('projets_id',$projets_id)
+                                                ->where('agents_id',$agents_id)
+                                                ->get();
+        $verificationS  = Verification::where('agents_id',$agents_id)
+                                        ->where('projets_id',$projets_id)
+                                        ->get();
+        $detailS        = DB::table('details')->where('agents_id',$agents_id)
+                                                ->get();
+        
+        return view('verifications.output',compact('projetS','agentS','verificationS','activiteS','detailS'));
         
     }
 
@@ -118,6 +142,20 @@ class VerificationController extends Controller
      */
     public function destroy(verification $verification)
     {
-        //
+        $verification->delete();
+
+        return back();
+    }
+
+    public function verificationsTermine()
+    {
+        $verificationS = verification::orderBy('created_at','desc')
+                                        ->get();
+       /* $verification_groupeds = $verificationS->groupBy('agents_id');*/
+
+        $agentS = Agents::withCount('verifications')->get();
+
+       
+        return view('verifications.termine',compact('agentS','verificationS'));
     }
 }

@@ -16,17 +16,17 @@ class CreateActivitesTable extends Migration
         Schema::create('activites', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nom');  
-            $table->integer('projet_id');
-            $table->integer('agent_id');
+            $table->integer('projets_id');
+            $table->integer('agents_id');
             $table->string('montant');
             $table->date('date_de_virement');
 
 
-            $table->foreign('projet_id')
+            $table->foreign('projets_id')
                     ->references('id')
                     ->on('projets')
                     ->onUpdate('cascade')->onDelete('cascade');  
-            $table->foreign('agent_id')
+            $table->foreign('agents_id')
                     ->references('id')
                     ->on('agents')
                     ->onUpdate('cascade')->onDelete('cascade');  

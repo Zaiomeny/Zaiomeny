@@ -15,8 +15,10 @@ class CreateVerificationTable extends Migration
     {
         Schema::create('verifications', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('projet_id');
-            $table->string('agent_id');
+            $table->string('projets_id');
+            $table->string('agents_id');
+            $table->string('code_analytique')->nullable();
+            $table->string('journal_banquaire')->nullable();
             $table->string('activite_nom');
             $table->string('total_a_justifier');
             $table->string('total_justifie');
@@ -25,6 +27,18 @@ class CreateVerificationTable extends Migration
             $table->string('date_d_arrivee_de_pjs');
             $table->string('date_de_verification');
             $table->string('verificateur');
+
+            
+            $table->foreign('projets_id')
+                    ->references('id')
+                    ->on('projets')
+                    ->onUpdate('cascade')->onDelete('cascade');
+
+                    
+            $table->foreign('agents_id')
+                    ->references('id')
+                    ->on('agents')
+                    ->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
         });

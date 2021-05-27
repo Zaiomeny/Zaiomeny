@@ -1,12 +1,15 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use App\Models\Agents;
 use App\Models\Projet;
 use App\Models\Activites;
+use App\Models\Notification;
 use App\Models\Brs;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class AgentController extends Controller
@@ -18,8 +21,7 @@ class AgentController extends Controller
      */
     public function index()
     {
-        $agentS = Agents::latest()->get();
-        return view('agents.index', compact('agentS'));
+        //
     }
 
     /**
@@ -29,7 +31,7 @@ class AgentController extends Controller
      */
     public function create()
     {
-       return view('agents.create');
+       //
     }
 
     /**
@@ -38,35 +40,41 @@ class AgentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request , $projet_id)
+    public function store(Request $request , $projets_id)
     {
-            $nom = $request->nom;
-            $prenom = $request->prenom;
-            $fonction = $request->fonction;
+        $request->validate([
+            'nom'           => 'required',
+            'fonction'      => 'required',
+            'num_equipe'    => 'required',
+            'adresse'       => 'required',
+            'telephone'     => 'required',
+            'projets_id'    => 'required',
+        ]);
+            $nom        = $request->nom;
+            $prenom     = $request->prenom;
+            $fonction   = $request->fonction;
             $num_equipe = $request->num_equipe;
-            $adresse = $request->adresse;
-            $telephone= $request->telephone;
-            $projet_id = $request->projet_id;
+            $adresse    = $request->adresse;
+            $telephone  = $request->telephone;
+            $projets_id = $request->projets_id;
 
         for($i = 0; $i < count($nom) ;$i++){
             $datasave = [
-                'nom' => $nom[$i],
-                'prenom' => $prenom[$i],
-                'fonction' => $fonction[$i],
+                'nom'        => $nom[$i],
+                'prenom'     => $prenom[$i],
+                'fonction'   => $fonction[$i],
                 'num_equipe' => $num_equipe[$i],
-                'adresse' => $adresse[$i], 
-                'telephone' => $telephone[$i], 
-                'projet_id' => $projet_id[$i],
+                'adresse'    => $adresse[$i], 
+                'telephone'  => $telephone[$i], 
+                'projets_id' => $projets_id,
 
-            ];
-        
-            Agents::insert($datasave);
+           ];
+            
+            Agents::create($datasave);
+            
         }
-        $projetS = Projet::where('id',$projet)->get();       
-        $agentS = DB::table('agents')->where('projet_id',$projet_id)->get();
-
-        return view('projets.list',compact('agentS','projetS'));
         
+        return back();
        
         
         
@@ -78,15 +86,9 @@ class AgentController extends Controller
      * @param  \App\Models\Agents  $agents
      * @return \Illuminate\Http\Response
      */
-    public function show($agent_id)
+    public function show($agents_id)
     {
-        $activiteS = Activites::latest()->get();
-        $brS = DB::table('brs')->where('agent_id',$agent_id)
-                                ->where('etat','non_verifie')
-                            ->get();
-        $agentS = Agents::where('id',$agent_id)
-                        ->get();
-        return view('agents.show', compact('activiteS','brS','agentS'));
+        //
     }
 
     /**
@@ -95,9 +97,9 @@ class AgentController extends Controller
      * @param  \App\Models\Agents  $agents
      * @return \Illuminate\Http\Response
      */
-    public function edit($agents)
+    public function edit($agents_id)
     {
-        $agentS = Agents::where('id',$agents)
+        $agentS = Agents::where('id',$agents_id)
                         ->get();
         return view('agents.edit', compact('agentS'));
     }
@@ -109,25 +111,41 @@ class AgentController extends Controller
      * @param  \App\Models\Agents  $agents
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Agents $agents)
+    public function update(Request $request,$agents_id)
     {
         $request->validate([          
-            'nom' => 'required',
-            'fonction' => 'required',
-            'num_equipe' => 'required',
-            'adresse' => 'required',
-            'telephone' => 'required',
+            'nom'           => 'required',
+            'fonction'      => 'required',
+            'num_equipe'    => 'required',
+            'adresse'       => 'required',
+            'telephone'     => 'required',
             
         ]);
+
+        $agentS = Agents::where('id',$agents_id)
+                            ->get();
         
-        $agents->update($request->all());
+        foreach($agentS as $agent){}
 
-        $projetS = Projet::where('id',$request->projet_id)->get();
+        $notification = [
+            'courte_description' => 'modifié le bénéficiaire ' . $agent->nom . ' ' . $agent->prenom,
+            'longue_description' => 'modifié le bénéficiaire ' . $agent->nom . ' ' . $agent->prenom . ' en ' . $request->nom .' '. $request->prenom,
+            'useurs_name' => Auth::user()->name,
+        ];
+        
+        Notification::create($notification);   
 
-        $activiteS = DB::table('activites')->where('projet_id',$request->projet_id)->get();
+        $agent->update($request->all());
 
-        $agentS = DB::table('agents')->where('projet_id',$request->projet_id)->get();
-        return view('projets.list',compact('agentS','projetS','activiteS'));
+        $projetS = Projet::where('id',$request->projets_id)->get();
+
+        $agentS  = Agents::where('projets_id',$request->projets_id)
+                                        ->orderBy('nom', 'asc')
+                                        ->withCount('activites')
+                                        ->paginate(20);
+
+
+        return view('projets.list',compact('agentS','projetS'));
     }
 
     /**
@@ -144,35 +162,35 @@ class AgentController extends Controller
     }
 
     /**
-     * Create agent with projet_id
+     * Create agent with projets_id
      */
-    public function forge(Request $request , $projet_id)
+    public function forge(Request $request , $projets_id)
     {
         $request->validate([
-            'nom' => 'required',
-            'fonction' => 'required',
+            'nom'        => 'required',
+            'fonction'   => 'required',
             'num_equipe' => 'required',
-            'adresse' => 'required',
-            'telephone' => 'required',
-            'projet_id' => 'required',
+            'adresse'    => 'required',
+            'telephone'  => 'required',
+            'projets_id' => 'required',
         ]);
-            $nom = $request->nom;
-            $prenom = $request->prenom;
-            $fonction = $request->fonction;
+            $nom        = $request->nom;
+            $prenom     = $request->prenom;
+            $fonction   = $request->fonction;
             $num_equipe = $request->num_equipe;
-            $adresse = $request->adresse;
-            $telephone= $request->telephone;
-            $projet_id = $request->projet_id;
+            $adresse    = $request->adresse;
+            $telephone  = $request->telephone;
+            $projets_id = $request->projets_id;
 
         for($i = 0; $i < count($nom) ;$i++){
             $datasave = [
-                'nom' => $nom[$i],
-                'prenom' => $prenom[$i],
-                'fonction' => $fonction[$i],
-                'num_equipe' => $num_equipe[$i],
-                'adresse' => $adresse[$i], 
-                'telephone' => $telephone[$i], 
-                'projet_id' => $projet_id,
+                'nom'           => $nom[$i],
+                'prenom'        => $prenom[$i],
+                'fonction'      => $fonction[$i],
+                'num_equipe'    => $num_equipe[$i],
+                'adresse'       => $adresse[$i], 
+                'telephone'     => $telephone[$i], 
+                'projets_id'    => $projets_id,
 
            ];
             
@@ -186,17 +204,86 @@ class AgentController extends Controller
         
         
     }
-    public function verifier($projet_id, $agent_id)
+
+    /**
+     * voir la liste de bénéficiaires par br
+     */
+    public function list($projet)
+    {  
+        $projetS = Projet::where('id',$projet)->get(); 
+
+        $agentS  = Agents::where('projets_id',$projet)
+                            ->orderBy('nom', 'asc')
+                            ->withCount('activites')
+                            ->paginate(20);
+        Agents::withCount('activites')->get();
+                                        
+        return view('projets.list',compact('agentS','projetS'));
+    }
+
+    /**
+     * Vérification
+     */
+    public function verifier($projets_id, $agents_id)
     {
-            $projetS = Projet::where('id',$projet_id)->get();
-            $agentS = Agents::where('id',$agent_id)->get();
-            $activiteS = Activites::where('agent_id',$agent_id)
-                                    ->where('projet_id',$projet_id)
+            $projetS    = Projet::where('id',$projets_id)->get();
+            $agentS     = Agents::where('id',$agents_id)
+                                    ->withCount('verifications')
+                                    ->get();
+
+            $activiteS  = Activites::where('agents_id',$agents_id)
+                                    ->where('projets_id',$projets_id)
                                     ->get();
             
 
-            $detailS = DB::table('details')->where('agent_id',$agent_id)
-                                        ->get();
+            $detailS    = DB::table('details')->where('agents_id',$agents_id)
+                                                ->get();
             return view('agents.verification',compact('projetS','agentS','activiteS','detailS'));
     }
+
+    /**
+     * Rechercher
+     * @param  \Illuminate\Http\Request  $request
+     */
+
+     public function chercher(Request $request)
+     {
+        $projet_id = $request->projets_id;
+        
+        $mot_cle = $request->agents_chercher;
+
+       
+        $projetS = Projet::where('id',$projet_id)->get(); 
+        
+        $agentS  = Agents::where('projets_id','=',$projet_id)
+                            ->where('nom','LIKE','%'.$mot_cle.'%')
+                                         
+                            ->withCount('activites')
+                            ->orderBy('nom', 'asc')
+                            ->paginate(20);
+                                       
+        return view('projets.list',compact('agentS','projetS'));
+        
+     }
+     /**
+      * Suppression
+      */
+      public function supprimer($agents_id)
+      {
+        $agent=Agents::where('id',$agents_id)->delete();
+        return back();
+      }
+      /**
+       * Suppression multiple 
+       */
+      public function suppimerTout(Request $request)
+      {
+        
+        $id = $request->ids;
+        
+        for ($i=0 ; $i <count($request->ids);$i++){
+            Agents::where('id',$id[$i])->delete();
+        }
+        return back();
+      }
 }

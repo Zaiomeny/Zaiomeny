@@ -1,19 +1,26 @@
 <x-app-layout>
-    <div class="p-12" style="background-color:transparent !important;">
-        @foreach($users as $user)
-            <div class="col-sm-12 col-md-12 mx-auto">
+    <div class=" row w-100 mx-auto p-5">
+        
+            <div class="col-md-6 mx-auto">
+                <div class="w-50 mx-auto rounded justify-content-center">
+                        <img src="{{asset('assets/images/avatar-1.jpg') }}" style="border-radius:15px;">                    
+                </div>
                 <p>
-                    <img src="{{asset('assets/images/avatar-1.jpg') }}" alt="" class="img-fluid img-circle">
-                    <span class="qoute">
-                        <i class="icofont icofont-quote-left"></i>
-                    </span>
-                    
-                </p>
-                <p>
-                    <h5 class="text-left">Nom(s) et prénom(s) : {{ $user->name }}  </h5>
-                    <h5>Email : {{ $user->email }}</h5>
+                    <h5 class="text-left">Nom : {{ Auth::user()->name }}  </h5>
+                    <h5>Email : {{ Auth::user()->email }}</h5>
+
+                    <!--Droit de l'utilisateur-->
+                    <h6 class="text-muted">
+                        Vous êtes :
+
+                        @if(Auth::user()->hasRole('administrator'))
+                            <span class="text-danger"> administrateur.</span>
+                        @elseif(Auth::user()->hasRole('user'))
+                            <span class="text-success"> utilisateur. </span>
+                        @endif
+                    </h6>
                 </p>
             </div>
-        @endforeach
+
     </div>
 </x-app-layout>

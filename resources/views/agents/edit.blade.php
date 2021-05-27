@@ -1,56 +1,74 @@
 <x-app-layout>
 
-    <div class="card mx-auto h-25">
-        <div class="card-header">
-            <h3 class="text-center">MODIFICATION EN COURS</h3>
+    <div class="w-100">
+        <div class="w-100 mt-4">
+            <h5 class="text-center text-muted">MODIFICATION EN COURS</h5>
         </div>
         <hr>
-        <div class="card-block col-lg-6 col-md-8 col-sm-8 col-xs-12 mx-auto shadow-sm p-4">
         @foreach($agentS as $agent)
-            <form action="{{ route('agents.update',$agent->id) }}" method="post">
+        <form action="{{ route('agents.update',$agent->id) }}" method="post">
+        
+        @csrf 
+        @method('PUT')
+
+            <div class="w-100 row mx-auto mt-2 p-4">
             
-            @csrf 
-            @method('PUT')
-            <!--Nom-->
-                <div class="form-group">
-                    <label for="nom[]">Nom :</label>
-                    <input type="text" name="nom[]" class="form-control" value="{{ $agent->nom }}" required>
+                <div class="col-sm-6 col-md-6 ">
+                
+                <!--Nom-->
+                    <div class="form-group">
+                        <label for="nom">Nom :</label>
+                        <input type="text" name="nom" class="form-control bg-none" value="{{ $agent->nom }}" required>
+                    </div>
+
+                <!--Prénom-->
+                    <div class="form-group">
+                        <label for="prenom">Prénom :</label>
+                        <input type="text" name="prenom" class="form-control bg-none" value="{{ $agent->prenom }}">
+                    </div>
+
+                <!--Fonction-->
+                    <div class="form-group">
+                        <label for="fonction">Fonction :</label>
+                        <input type="text" name="fonction" class="form-control bg-none" value="{{ $agent->fonction }}" required>
+                    </div>
                 </div>
-            <!--Prénom-->
-                <div class="form-group">
-                    <label for="prenom[]">Prénom :</label>
-                    <input type="text" name="prenom[]" class="form-control" value="{{ $agent->prenom }}">
+
+
+                <div class="col-sm-6 col-md-6 ">
+
+                <!--Numéro équipe-->
+                    <div class="form-group">
+                        <label for="num_equipe">Equipe n° :</label>
+                        <input type="text" name="num_equipe" class="form-control bg-none" value="{{ $agent->num_equipe }}" required>
+                    </div>
+
+                <!--Adresse-->
+                    <div class="form-group">
+                        <label for="adresse">Adresse :</label>
+                        <input type="text" name="adresse" class="form-control bg-none" value="{{ $agent->adresse }}" required>
+                    </div>
+
+                <!--Téléphone-->
+                    <div class="form-group">
+                        <label for="telephone">Téléphone :</label>
+                        <input type="text" name="telephone" class="form-control bg-none" value="{{ $agent->telephone }}" required>
+                    </div>
                 </div>
-            <!--Fonction-->
+
+                <!--Id projet-->
+                <input type="hidden" name="projets_id" value="{{ $agent->projets_id }}">
+                
+                <!--Bouton de soumission-->
                 <div class="form-group">
-                    <label for="fonction[]">Fonction :</label>
-                    <input type="text" name="fonction[]" class="form-control" value="{{ $agent->fonction }}" required>
+                    <button type="submit" class="btn btn-outline-danger">
+                        <i class="ti-reload"></i> Modifier
+                    </button>
                 </div>
-            <!--Numéro équipe-->
-                <div class="form-group">
-                    <label for="num_equipe[]">Equipe n° :</label>
-                    <input type="text" name="num_equipe[]" class="form-control" value="{{ $agent->num_equipe }}" required>
-                </div>
-            <!--Adresse-->
-                <div class="form-group">
-                    <label for="adresse[]">Adresse :</label>
-                    <input type="text" name="adresse[]" class="form-control" value="{{ $agent->adresse }}" required>
-                </div>
-            <!--Téléphone-->
-                <div class="form-group">
-                    <label for="telephone[]">Téléphone :</label>
-                    <input type="text" name="telephone[]" class="form-control" value="{{ $agent->telephone }}" required>
-                </div>
-            <!--Id projet-->
-                <input type="hidden" name="projet_id" value="{{ $agent->projet_id }}">
-            <!--Bouton de soumission-->
-                <div class="form-group">
-                    <button type="submit" class="btn btn-outline-primary float-end">Modifier</button>
-                </div>
-            </form>
-            
+                
+            </div>
+        </form>
         @endforeach
-        </div>
     </div>
  
 </x-app-lyout>

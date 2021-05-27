@@ -18,8 +18,14 @@ class Projet extends Model
     {
         return $this->hasMany(Activites::class);
     }
+    
     public function agents()
     {
-        return $this->hasMany(Agents::class);
+        return $this->hasMany(Agents::class,'projets_id');
+    }
+    
+    public function verifications()
+    {
+        return $this->hasMany(verification::class);
     }
 }

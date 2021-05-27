@@ -15,7 +15,10 @@ class ProjetController extends Controller
      */
     public function index()
     {
-        $projetS = Projet::all();
+        $projetS = Projet::orderBy('nom', 'asc')
+                            ->withCount('agents')
+                            ->paginate(20);
+                            
         return view ('projets.index',compact('projetS'));
     }
 
@@ -37,14 +40,15 @@ class ProjetController extends Controller
      */
     public function store(Request $request)
     {
-       $request->validate([
+        $request->validate([
             'num_br' => 'required',
             'nom'    => 'required',
             'date'   => 'required',
 
-       ]);
-       Projet::create($request->all());
-       $projetS = Projet::all();
+        ]);
+        Projet::create($request->all());
+
+        $projetS = Projet::paginate(40);
         return view ('projets.index',compact('projetS'));
     }
 
@@ -87,7 +91,8 @@ class ProjetController extends Controller
 
         ]);
         $projet->update($request->all());
-        $projetS = Projet::all();
+
+        $projetS = Projet::paginate(40);
         return view ('projets.index',compact('projetS'));
     }
 
@@ -100,31 +105,37 @@ class ProjetController extends Controller
     public function destroy(Projet $projet)
     {
         $projet->delete();
-        $projetS = Projet::all();
-        return view ('projets.index',compact('projetS'));
+        return back();
 
     }
-    /**
-     * voir la liste de bénéficiaires du br
-     */
-    public function list($projet)
-    {  
-        $projetS = Projet::where('id',$projet)->get();
-
-        $activiteS = DB::table('activites')->where('projet_id',$projet)->get();
-
-        $agentS = DB::table('agents')->where('projet_id',$projet)->get();
-        return view('projets.list',compact('agentS','projetS','activiteS'));
-    }
+    
     /**
      * voir l'etat du br
      */
-    public function etat($projet_id)
+    public function etat($projets_id)
     {
-        $projetS        = Projet::where('id',$projet_id)->get();
-        $verificationS  = DB::table('verifications')->where('projet_id',$projet_id)->get();
-        $agentS         = DB::table('agents')->where('projet_id',$projet_id)->get();
-
+        $projetS        = Projet::where('id',$projets_id)->get();
+        $verificationS  = DB::table('verifications')->where('projets_id',$projets_id)
+                                                    ->get();
+        $agentS         = DB::table('agents')->where('projets_id',$projets_id)
+                                                ->orderBy('nom', 'asc')
+                                                ->get();
+        
         return view('projets.etat',compact('projetS','verificationS','agentS'));
+    }
+    /**
+     * Recherche 
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function chercher(Request $request)
+    {
+        $mot_cle = $request->projets_chercher;
+
+        $projetS = Projet::where('nom','LIKE','%'.$mot_cle.'%')
+                            ->orWhere('num_br','LIKE','%'.$mot_cle.'%')
+                            ->orderBy('nom', 'asc')
+                            ->paginate(20);
+
+        return view ('projets.index',compact('projetS'));
     }
 }

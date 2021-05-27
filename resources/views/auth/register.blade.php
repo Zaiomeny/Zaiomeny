@@ -61,32 +61,32 @@
                             <div class="text-center">
                                 <img src="assets/images/auth/logo-dark.png" alt="logo.png">
                             </div>
-                            <div class="auth-box">
+                            <div class="m-4 auth-box">
                                 <div class="row m-b-20">
                                     <div class="col-md-12">
-                                        <h3 class="text-center txt-primary">Sign up. It is fast and easy.</h3>
+                                        <h3 class="text-center txt-primary">S'incrire, c'est facile et rapide !</h3>
                                     </div>
                                 </div>
                                 <hr/>
                                 <div class="input-group">
-                                    <input type="text" name="name" class="form-control" placeholder="Choose Username">
+                                    <input type="text" name="name" class="form-control bg-none" placeholder="Votre pseudo" required>
                                     <span class="md-line"></span>
                                 </div>
                                 <div class="input-group">
-                                    <input type="email" name="email" class="form-control" placeholder="Your Email Address">
+                                    <input type="email" name="email" class="form-control bg-none" placeholder="Votre adresse email" required>
                                     <span class="md-line"></span>
                                 </div>
                                 <div class="input-group">
-                                    <input type="password" name="password" class="form-control" placeholder="Choose Password">
+                                    <input type="password" name="password" class="form-control bg-none" placeholder="Mot de passe" required>
                                     <span class="md-line"></span>
                                 </div>
                                 <div class="input-group">
-                                    <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password">
+                                    <input type="password" class="form-control bg-none" name="password_confirmation" placeholder="Confirmez votre mot de passe" required>
                                     <span class="md-line"></span>
                                 </div>
                                 <div class="form-group">
-                                    <select name="role_id"  class="form-control" required>
-                                        <option value="">Rôle</option>
+                                    <select name="role_id"  class="form-control bg-none" required>
+                                        <option value="">Choisissez un rôle</option>
                                         <option value="administrator">Administrateur</option>
                                         <option value="user">Utilisateur</option>
                                     </select>
@@ -94,19 +94,10 @@
                                 </div>
                                 <div class="row m-t-30">
                                     <div class="col-md-12">
-                                        <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Sign up now.</button>
+                                        <button type="submit" class="btn btn-outline-primary btn-md btn-block waves-effect text-center m-b-20">S'incrire</button>
                                     </div>
                                 </div>
-                                <hr/>
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <p class="text-inverse text-left m-b-0">Thank you and enjoy our website.</p>
-                                        <p class="text-inverse text-left"><b>Your Authentication Team</b></p>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <img src="assets/images/auth/Logo-small-bottom.png" alt="small-logo.png">
-                                    </div>
-                                </div>
+                                
                             </div>
                         </form>
 

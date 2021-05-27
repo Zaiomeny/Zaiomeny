@@ -1,9 +1,35 @@
 
-
-.bg-gray{
-  background-color: gray;
+div.notification_scroll{
+    overflow:scroll;
+    height:250px;
 }
-
+body .btn{
+  text-align: center !important;
+}
+.bottom-bordered{
+  border:none;
+  border-bottom:1px solid #ddd;
+}
+body button{
+  text-align: center !important;
+}
+.justify-content{
+  justify-content: center;
+}
+.text-ws{
+    color:rgba(66, 67, 68, 0.986) !important;
+}
+.suite{
+  cursor: pointer;
+}
+.bg-gray{
+  background-color: rgba(128, 128, 128, 0.281);
+  color:rgb(7, 7, 7);
+  text-shadow: 1px 1px 10px 10px rgb(241, 240, 240);
+}
+.shadow-none{
+  box-shadow: 0 0px 0px black;
+}
 .bg-personnel-ws{
   background-color: rgba(245, 245, 245, 0.808);
   border:2px solid rgba(0, 0, 0, 0.219);
@@ -11,10 +37,7 @@
 .bg-ws{
   background-color: rgba(245, 245, 245, 0.808);
 }
-.bg-gray{
-  background-color: rgb(58, 58, 58);
-  color:white;
-}
+
 .borderless{
   border:none;
 }
@@ -66,7 +89,7 @@ ul {
   outline: none; }
 
 a {
-  text-decoration: none;
+  text-decoration: none !important;
   font-size: 14px;
   color: #303548;
 }

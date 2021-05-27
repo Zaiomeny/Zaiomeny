@@ -6,9 +6,13 @@ use App\Http\Controllers\ActiviteController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\BrController;
 use App\Http\Controllers\DetailController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProjetController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificationController;
+
+
+use App\Models\Notification;
 
 
 
@@ -25,32 +29,77 @@ use App\Http\Controllers\VerificationController;
 */
 
 Route::get('/', function () {
-    //return view('welcome');
+    return view('welcome');
 });
 
-Route::resource('verifications',VerificationController::class);
 
-Route::resource('agents',AgentController::class);
-Route::get('agents/forge/{projet_id}',[AgentController::class,'forge'])->name('agents.forge');
-Route::get('agents/verifier/{projet_id}/{agent_id}',[AgentController::class,'verifier'])->name('agents.verifier');
-
-Route::resource('projets',ProjetController::class);
-Route::get('projets/liste/{projet_id}',[ProjetController::class,'list'])->name('projets.list');
-Route::get('projets/etat/{projet_id}',[ProjetController::class,'etat'])->name('projets.etat');
-
-Route::resource('activites',ActiviteController::class);
-Route::get('activites/liste/{projet_id}/{agent_id}',[ActiviteController::class,'liste'])->name('activites.liste');
-Route::resource('brs',BrController::class);
-
-Route::resource('details',DetailController::class);
-Route::get('details/supprimer/{id}',[DetailController::class,'supprimer'])->name('details.supprimer');
-
-Route::get('activite/details/{id}',[BrController::class,'details'])->name('activites.details');
-//Route::get('activite/etat/{id}',[BrController::class,'etat'])->name('activites.etat');
 Route::get('/dashboard', function () {
+
     return view('dashboard');
+
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('profiles/{id}',[UserController::class,'show'])->name('profiles.view');
+
+Route::group(['middleware' => ["auth","role:administrator|user"]],function(){
+        /**
+         * Route pour activités
+         */
+        Route::resource('activites',ActiviteController::class);
+        Route::get('projet/{projets_id}/agent/{agents_id}/activites/liste',[ActiviteController::class,'liste'])->name('activites.liste');
+        Route::get('projet/{projets_id}/agent/{agents_id}/activite/{activites_id}/modifier',[ActiviteController::class,'edit'])->name('activites.modifier');
+        Route::get('projet/{projets_id}/agent/{agents_id}/activite/{activites_id}/mettre_a_jour',[ActiviteController::class,'modifier'])->name('activites.mettre_a_jour');
+        /**
+         * Route pour agents
+         */
+        Route::resource('agents',AgentController::class);
+        Route::get('agents/{agents_id}/supprimer',[AgentController::class,'supprimer'])->name('agents.supprimer');
+        Route::delete('agents/',[AgentController::class,'suppimerTout'])->name('agents.supprimerTout');
+        Route::get('agents/forge/{projets_id}',[AgentController::class,'forge'])->name('agents.forge');
+        
+        Route::post('/projet/agents/chercher',[AgentController::class,'chercher'])->name('agents.chercher');
+        Route::get('projet/{projets_id}/agent/{agents_id}/verifier',[AgentController::class,'verifier'])->name('agents.verifier');
+
+        /**
+         * Route pour br
+         */
+        Route::resource('brs',BrController::class);
+
+        /**
+         * Route pour details
+         */
+        Route::resource('details',DetailController::class);
+        Route::get('details/{detail_id}/supprimer',[DetailController::class,'supprimer'])->name('details.supprimer');
+
+
+        /**
+         * Notifications
+         */
+        Route::get('notifications/effacer',[NotificationController::class,'cacher'])->name('notifications.cacher');
+        Route::resource('notifications',NotificationController::class);
+
+        /**
+         * Route pour projet
+         */
+        Route::resource('projets',ProjetController::class);
+        Route::get('projet/{projets_id}/agents/liste',[AgentController::class,'list'])->name('projets.list');
+        Route::get('projet/{projets_id}/etat',[ProjetController::class,'etat'])->name('projets.etat');
+        Route::post('projets/chercher',[ProjetController::class,'chercher'])->name('projets.chercher');
+       
+
+        /**
+         * Route pour verifications
+         */
+        Route::resource('verifications',VerificationController::class);
+        Route::get('verifications',[VerificationController::class,'verificationsTermine'])->name('verifications.termine');
+
+        /**
+         * Route pour users
+         */
+        Route::get('users/profiles',[UserController::class,'view_profile'])->name('profiles.view');
+        Route::get('/users',[UserController::class,'index'])->name('users');
+
+
+});
+
 
 require __DIR__.'/auth.php';
